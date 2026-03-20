@@ -3,7 +3,7 @@
 Welcome to my personal portfolio repository! This is a high-performance, premium-design digital space built to showcase my creative experiments and development skills.
 
 ## ✨ Live Demo
-Check out the live site here: [**saahu.in**](https://saahu.in)
+Check out the live site here: [**saahu.in**](https://www.saahu.in/)
 
 ## 🛠️ Tech Stack
 - **Frontend**: React.js & Vite
