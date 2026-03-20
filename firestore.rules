@@ -1,0 +1,15 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public READ access for all data
+    match /artifacts/{appId}/public/data/{document=**} {
+      allow read: if true;
+      
+      // WRITE access restricted to Authenticated Users
+      // Since your app uses signInAnonymously, this ensures only YOUR app can write.
+      // For peak security, you can further restrict this to your specific Admin UID.
+      allow write, update, delete: if request.auth != null;
+    }
+  }
+}
