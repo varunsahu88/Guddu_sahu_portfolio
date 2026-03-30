@@ -481,12 +481,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
         className="bg-[#0D0D0D]/80 backdrop-blur-2xl border-4 border-[#E86737] w-[96vw] max-w-[1400px] h-[88vh] rounded-[2.5rem] overflow-hidden flex flex-col relative shadow-[0_0_80px_-20px_rgba(232,103,55,0.4)]"
       >
 
-        <button 
-          onClick={onClose}
-          className="absolute top-8 right-10 p-2 md:p-3 bg-zinc-800/30 hover:bg-zinc-800 rounded-full text-zinc-400 hover:text-white transition-all active:scale-95 z-20"
-        >
-          <X size={20} />
-        </button>
+
 
         <div className="flex-1 overflow-hidden relative z-10 flex flex-col">
           <div className="flex-1 overflow-y-auto scrollbar-hide">
@@ -604,7 +599,14 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
       </div>
 
         {/* Global Sticky Navigation Controls */}
-        <div className="absolute bottom-6 md:bottom-8 left-0 right-0 lg:left-[440px] flex justify-center items-center z-[60] pointer-events-none px-4">
+        <div className="absolute bottom-4 md:bottom-6 left-0 right-0 lg:left-[440px] flex flex-col items-center gap-4 z-[60] pointer-events-none px-4">
+          <button 
+            onClick={onClose}
+            className="p-3 bg-zinc-900/80 hover:bg-red-500/20 text-zinc-400 hover:text-white rounded-full border border-zinc-800 backdrop-blur-xl transition-all active:scale-95 pointer-events-auto group"
+          >
+            <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+
           <div className="flex items-center justify-center gap-3 py-2 bg-[#0D0D0D]/90 rounded-full border border-zinc-800/50 backdrop-blur-3xl px-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] pointer-events-auto ring-1 ring-white/5">
             <button 
               onClick={handlePrev}
@@ -730,6 +732,33 @@ const App = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const chatEndRef = useRef(null);
   const dotControls = useAnimation();
+
+  // Handle browser back button to close project modal
+  useEffect(() => {
+    if (selectedProject) {
+      window.history.pushState({ modal: 'project' }, '');
+    }
+
+    const handlePopState = (event) => {
+      if (selectedProject) {
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [selectedProject]);
+
+  // Sync manual close with history
+  const handleCloseProject = () => {
+    if (selectedProject) {
+      if (window.history.state?.modal === 'project') {
+        window.history.back();
+      } else {
+        setSelectedProject(null);
+      }
+    }
+  };
 
   const addDebugLog = (msg) => {
     setDebugLog(prev => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev].slice(0, 50));
@@ -1612,7 +1641,7 @@ const App = () => {
         {selectedProject && (
           <ProjectDetailModal 
             p={selectedProject} 
-            onClose={() => setSelectedProject(null)} 
+            onClose={handleCloseProject} 
             setSelectedFullScreenImg={setSelectedFullScreenImg}
             projects={projects}
             setSelectedProject={setSelectedProject}
