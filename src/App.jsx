@@ -500,7 +500,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                 exit="exit"
                 className="grid lg:grid-cols-[440px_1fr] min-h-full h-fit"
               >
-            <div className="p-6 pt-2 pb-20 md:p-16 md:pb-32 flex flex-col justify-between bg-zinc-900/40 backdrop-blur-2xl border-r border-white/5 order-2 lg:order-1 relative z-10">
+            <div className="p-6 pt-2 pb-20 md:p-16 md:pb-32 flex flex-col items-center text-center justify-between bg-zinc-900/40 backdrop-blur-2xl border-r border-white/5 order-2 lg:order-1 relative z-10">
               <div className="space-y-8 md:space-y-12">
                 <div>
                   <p className="text-orange-500 text-xs md:text-xs tracking-[0.3em] font-black mb-3 uppercase">
@@ -512,7 +512,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                 </div>
                 <div className="space-y-4">
                   <h4 className="text-orange-500 text-[10px] md:text-xs tracking-[0.3em] font-black uppercase">The Vision</h4>
-                  <p className="text-sm md:text-[15px] text-zinc-300 leading-relaxed font-bold uppercase whitespace-pre-wrap max-w-md">
+                  <p className="text-sm md:text-[15px] text-zinc-300 leading-relaxed font-bold uppercase whitespace-pre-wrap max-w-md mx-auto">
                     {p.desc || "No description provided."}
                   </p>
                 </div>
@@ -532,7 +532,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                   </a>
                 </div>
               </div>
-              <div className="mt-12 md:mt-20 hidden md:grid grid-cols-2 gap-6 uppercase font-black max-w-md">
+              <div className="mt-12 md:mt-20 hidden md:grid grid-cols-2 gap-6 uppercase font-black max-w-md mx-auto">
                 <div className="bg-[#0A0A0A] p-8 rounded-[1.8rem] border border-zinc-800/40">
                   <p className="text-orange-500 text-[9px] mb-3 tracking-widest opacity-80 uppercase">Grid</p>
                   <p className="text-white text-3xl font-black">POS #{p.displayOrder || '1'}</p>
@@ -1232,14 +1232,14 @@ const App = () => {
 
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-xl py-3 border-b border-zinc-800' : 'bg-transparent py-5'}`}>
-        <div className="max-w-7xl mx-auto px-8 md:px-6 flex justify-between items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            className="flex items-center gap-3 group cursor-default"
-          >
-            <img src="/logo.png" alt="GS Logo" className="w-14 h-14 object-contain mix-blend-multiply scale-125" />
-          </motion.div>
+          <div className="max-w-7xl mx-auto px-8 md:px-6 flex justify-between items-center relative h-10 md:h-14">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-3 group cursor-default z-10"
+            >
+              <span className="text-3xl font-black text-white tracking-tighter group-hover:scale-110 transition-all duration-300">GS<span className="text-orange-500">.</span></span>
+            </motion.div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
             {navLinks.map(l => <a key={l.name} href={l.href} className="text-zinc-400 hover:text-white transition-colors">{l.name}</a>)}
             <button onClick={() => isAdmin ? setIsAdmin(false) : setShowAdminModal(true)}>{isAdmin ? <Unlock size={16} className="text-orange-500" /> : <Lock size={16} />}</button>
@@ -1317,7 +1317,7 @@ const App = () => {
                   className="w-full h-full object-cover" 
                 />
               ) : (
-                <img src="/logo.png" alt="GS Monogram" className="w-3/4 h-3/4 object-contain opacity-100 group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" />
+                <span className="text-8xl font-black text-white tracking-widest group-hover:scale-110 transition-all duration-700">GS<span className="text-orange-500">.</span></span>
               )}
               <div className="absolute bottom-8 left-8 text-left z-10">
                 <p className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Identity</p>
