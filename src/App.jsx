@@ -1238,7 +1238,7 @@ const App = () => {
             animate={{ opacity: 1, x: 0 }} 
             className="flex items-center gap-3 group cursor-default"
           >
-            <span className="text-3xl font-black text-white tracking-tighter group-hover:scale-110 transition-all duration-300">GS<span className="text-orange-500">.</span></span>
+            <img src="/gs-logo.png" alt="GS." className="h-8 w-auto group-hover:scale-110 transition-all duration-300" />
           </motion.div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
             {navLinks.map(l => <a key={l.name} href={l.href} className="text-zinc-400 hover:text-white transition-colors">{l.name}</a>)}
@@ -1317,7 +1317,7 @@ const App = () => {
                   className="w-full h-full object-cover" 
                 />
               ) : (
-                <span className="text-8xl font-black text-white tracking-widest group-hover:scale-110 transition-all duration-700">GS<span className="text-orange-500">.</span></span>
+                <img src="/gs-logo.png" alt="GS." className="w-48 h-48 group-hover:scale-110 transition-all duration-700" />
               )}
               <div className="absolute bottom-8 left-8 text-left z-10">
                 <p className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Identity</p>
