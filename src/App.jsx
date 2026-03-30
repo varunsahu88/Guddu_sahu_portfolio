@@ -516,7 +516,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                     {p.desc || "No description provided."}
                   </p>
                 </div>
-                <div className="pt-2">
+                <div className="pt-2 flex justify-center md:block">
                   <a 
                     href={p.link} 
                     target="_blank" 
