@@ -12,7 +12,7 @@ import {
 // --- Firebase Imports ---
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, setDoc, getDoc, query, orderBy, getDocs } from 'firebase/firestore';
 
 // --- Configuration ---
 const firebaseConfig = {
@@ -470,12 +470,14 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       exit={{ opacity: 0 }}
+      onClick={onClose}
       className="fixed inset-0 z-[1000] bg-black/80 backdrop-blur-2xl flex items-center justify-center p-4 md:p-10 font-black uppercase"
     >
       <motion.div 
         initial={{ y: 50, scale: 0.95, opacity: 0 }}
         animate={{ y: 0, scale: 1, opacity: 1 }}
         exit={{ y: 20, scale: 0.95, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
         className="bg-[#0D0D0D]/80 backdrop-blur-2xl border-4 border-[#E86737] w-[96vw] max-w-[1400px] h-[88vh] rounded-[2.5rem] overflow-hidden flex flex-col relative shadow-[0_0_80px_-20px_rgba(232,103,55,0.4)]"
       >
 
@@ -498,7 +500,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                 exit="exit"
                 className="grid lg:grid-cols-[440px_1fr] min-h-full h-fit"
               >
-            <div className="p-6 md:p-16 pb-32 flex flex-col justify-between bg-zinc-900/40 backdrop-blur-2xl border-r border-white/5 order-2 lg:order-1 relative z-10">
+            <div className="p-6 pt-2 pb-20 md:p-16 md:pb-32 flex flex-col justify-between bg-zinc-900/40 backdrop-blur-2xl border-r border-white/5 order-2 lg:order-1 relative z-10">
               <div className="space-y-8 md:space-y-12">
                 <div>
                   <p className="text-orange-500 text-xs md:text-xs tracking-[0.3em] font-black mb-3 uppercase">
@@ -541,7 +543,7 @@ const ProjectDetailModal = ({ p, onClose, setSelectedFullScreenImg, projects, se
                 </div>
               </div>
             </div>
-            <div className="p-6 md:p-16 pb-32 order-1 lg:order-2 flex flex-col justify-center gap-8 bg-[#0F0F0F]/30 overflow-hidden">
+            <div className="p-6 pt-10 pb-4 md:p-16 md:pb-32 order-1 lg:order-2 flex flex-col justify-start lg:justify-center gap-6 md:gap-8 bg-[#0F0F0F]/30 overflow-hidden">
               {(() => {
                 const allVisuals = [
                   ...(p.imageUrl ? [p.imageUrl] : []),
@@ -1203,6 +1205,7 @@ const App = () => {
             initial="initial"
             animate="animate"
             exit="exit"
+            onClick={() => setIsMenuOpen(false)}
             className="fixed inset-0 z-[999] bg-black/40 backdrop-blur-[80px] flex flex-col items-center justify-center font-black border-l border-white/10 shadow-[inset_0_0_150px_rgba(255,255,255,0.05)]"
           >
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-6 p-2 text-white bg-zinc-900 rounded-full border border-zinc-800 transition-transform active:scale-90"><X size={24} /></button>
@@ -1233,9 +1236,9 @@ const App = () => {
           <motion.div 
             initial={{ opacity: 0, x: -20 }} 
             animate={{ opacity: 1, x: 0 }} 
-            className="text-2xl font-black tracking-tighter text-white group cursor-default"
+            className="flex items-center gap-3 group cursor-default"
           >
-            GS<span className="text-orange-500 group-hover:animate-pulse transition-all">.</span>
+            <img src="/logo.png" alt="GS Logo" className="w-14 h-14 object-contain mix-blend-multiply scale-125" />
           </motion.div>
           <div className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
             {navLinks.map(l => <a key={l.name} href={l.href} className="text-zinc-400 hover:text-white transition-colors">{l.name}</a>)}
@@ -1314,7 +1317,7 @@ const App = () => {
                   className="w-full h-full object-cover" 
                 />
               ) : (
-                <User size={100} className="text-zinc-800 group-hover:text-orange-500 transition-colors" />
+                <img src="/logo.png" alt="GS Monogram" className="w-3/4 h-3/4 object-contain opacity-100 group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" />
               )}
               <div className="absolute bottom-8 left-8 text-left z-10">
                 <p className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Identity</p>
